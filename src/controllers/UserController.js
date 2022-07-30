@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const createUserToken = require('../helpers/create-user-token');
 const getToken = require('../helpers/get-token');
+const getUserByToken = require('../helpers/get-user-by-token')
 
 module.exports = class UserController {
 
@@ -97,8 +98,45 @@ module.exports = class UserController {
     };
 
     static async editUser(req, res){
-        res.status(200).json({ msg: 'ok cuzãooo' })
-        return 
+        const id = req.params.id
+
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+
+        const { name, email, password, confirmPassword } = req.body
+        let image = ''
+
+        const userExist = await User.findOne({ email: email })
+
+        if (!name) {
+            return res.status(422).json({ msg: 'O nome deve ser obrigatório' })
+        }
+
+        user.name = name
+
+        if (!email) {
+            return res.status(422).json({ msg: 'O e-mail deve ser obrigatório' })
+        }
+
+        if(user.email !== email && userExist){
+            res.status(422).json({ msg: 'Esse usuário não tem acesso para mudar as informações de outro usuário. ',})
+            return 
+        }
+
+        user.email = email
+
+
+        if (!password) {
+            return res.status(422).json({ msg: 'A senha deve ser obrigatório' })
+        }
+        if (!confirmPassword) {
+            return res.status(422).json({ msg: 'A confirmação de senha deve ser obrigatório' })
+        }
+        if (password !== confirmPassword) {
+            return res.status(422).json({ msg: 'A senha deve ser igual a informada' })
+        }
+ 
+
     };
 
 
