@@ -6,12 +6,13 @@ function createUserToken(user, req, res) {
         {
             name: user.name,
             id: user._id,
-        }, "secret", )
+        }, "secret")
 
     res.status(200).json({
         msg: "Você está autenticado",
         token: token,
-        userId: user._id
+        userId: user._id,
+        email: user.email
     })
 }
 
