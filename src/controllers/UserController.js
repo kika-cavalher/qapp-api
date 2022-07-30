@@ -65,7 +65,20 @@ module.exports = class UserController {
             return res.status(422).json({ msg: 'Senha inválida' })
         }
         await createUserToken(user, req, res)
-
-        //244
     }
+
+    static async checkUser(req, res){
+        let currentUser
+        console.log(req.headers.authorization)
+        if(req.headers.authorization){
+
+
+
+        } else {
+            currentUser = null
+        }
+        res.status(200).send(currentUser)
+    };
+ 
+    //245
 }
