@@ -104,7 +104,10 @@ module.exports = class UserController {
         const user = await getUserByToken(token)
 
         const { name, email, password, confirmPassword } = req.body
-        let image = ''
+
+        if(req.file){
+            user.image = req.file.filename
+        }
 
         const userExist = await User.findOne({ email: email })
 
@@ -151,6 +154,9 @@ module.exports = class UserController {
  
 
     };
+
+
+    //251
 
 
 }
