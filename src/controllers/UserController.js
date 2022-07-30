@@ -7,7 +7,7 @@ const getToken = require('../helpers/get-token');
 
 module.exports = class UserController {
 
-    static async register(req, res) {
+    static async register(req, res){
         const { name, email, password, confirmPassword } = req.body
 
         if (!name) {
@@ -46,9 +46,9 @@ module.exports = class UserController {
         } catch (err) {
             res.status(500).json({ msg: err })
         }
-    }
+    };
 
-    static async login(req, res) {
+    static async login(req, res){
         const { email, password } = req.body
         if (!email) {
             return res.status(422).json({ msg: 'O e-mail deve ser obrigatório' })
@@ -67,7 +67,7 @@ module.exports = class UserController {
             return res.status(422).json({ msg: 'Senha inválida' })
         }
         await createUserToken(user, req, res)
-    }
+    };
 
     static async checkUser(req, res){
         let currentUser
@@ -84,5 +84,15 @@ module.exports = class UserController {
         }
         res.status(200).send(currentUser)
     };
- 
+
+    static async getUserById(req, res){
+       const id = req.params.id
+       const user = await User.findById(id).select("-password")
+
+       if(!user){
+        res.status(422).json({ msg: 'User não encontrado' })
+        return 
+       }
+        res.status(200).json({ user })
+    };
 }
