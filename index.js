@@ -2,7 +2,22 @@ const express = require('express');
 const requireDir = require('require-dir')
 const cors = require('cors');
 const UserRoutes = require('./src/routes/UserRoutes')
-require('./src/db/comn');
+// require('./src/db/comn');
+
+(async () => {
+    try {
+        const dbUrl = process.env.NODE_ENV === 'production' ? process.env.DB_PROD : process.env.DB_LOCAL;
+        await db.mongoose.connect(dbUrl, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log('Conectado ao banco de dados');
+    } catch (error) {
+        console.log(`Erro ao conectar no banco de dados! ${error}`);
+
+        process.exit();
+    }
+})();
 
 //Inicialized
 const app = express();
