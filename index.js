@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 //Solve Cors
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors());
 
 // Public folder for img
 app.get('/', (req, res) => {
