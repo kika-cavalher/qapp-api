@@ -1,7 +1,8 @@
 const express = require('express');
+const requireDir = require('require-dir')
 const cors = require('cors');
 const UserRoutes = require('./src/routes/UserRoutes')
-const conn = require('./src/db/comn');
+require('./src/db/comn');
 
 //Inicialized
 const app = express();
@@ -12,6 +13,8 @@ app.use(express.json());
 //Solve Cors
 app.use(cors());
 
+requireDir('./src/models')
+
 // Public folder for img
 app.get('/', (req, res) => {
     res.status(200)
@@ -21,4 +24,4 @@ app.get('/', (req, res) => {
 //Routes
 app.use('/users', UserRoutes)
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
