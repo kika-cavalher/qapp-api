@@ -2,6 +2,7 @@ const express = require('express');
 const requireDir = require('require-dir')
 const cors = require('cors');
 const UserRoutes = require('./src/routes/UserRoutes')
+const ProjectRoutes = require('./src/routes/ProjectRoutes')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
@@ -39,5 +40,7 @@ app.get('/', (req, res) => {
 
 //Routes
 app.use('/users', UserRoutes)
+app.use('/projects', ProjectRoutes)
+
 
 app.listen(process.env.PORT || 5000);
