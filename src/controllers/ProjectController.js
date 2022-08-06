@@ -39,6 +39,24 @@ module.exports = class ProjectController {
         } catch (error) {
             res.status(500).json({ msg: error })
         }
-
     }
+
+    static async allProjects(req, res) {
+        const projects = await Project.find().sort('-createdAt')
+        res.status(200).json(
+            {
+                projects: projects
+            })
+    }
+
+
+    static async cre66ate(req, res) {}
+
+
+    static async cre888ate(req, res) {}
+
+
+
+
+
 }

@@ -5,5 +5,8 @@ const verifyToken = require('../helpers/verify-token')
 
 
 router.post('/create', verifyToken, ProjectController.create)
+router.get('/allProjects', ProjectController.allProjects)
+
+
 
 module.exports = router;
