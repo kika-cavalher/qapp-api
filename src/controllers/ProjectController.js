@@ -91,6 +91,7 @@ module.exports = class ProjectController {
         const project = await Project.findOne({'_id': id})
         if(!project){
             res.status(404).json({ msg: 'Projeto não encontrado.' })
+            return
         }
 
         const token = getToken(req)
@@ -98,6 +99,7 @@ module.exports = class ProjectController {
 
         if(project.user._id.toString() !== user._id.toString()){
             res.status(422).json({ msg: 'O user não tem acesso a esse projeto.' })
+            return
         }
 
         await Project.findByIdAndRemove(id)
@@ -108,5 +110,48 @@ module.exports = class ProjectController {
 
     }
 
-    static async cre888ate(req, res) {}
+    static async updateProject(req, res) {
+        const id = req.params.id
+        const { name, content, describe } = req.body
+
+        const updatedData = {}
+
+        const project = await Project.findOne({'_id': id})
+        if(!project){
+            res.status(404).json({ msg: 'Projeto não encontrado.' })
+        }
+
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+
+        if(project.user._id.toString() !== user._id.toString()){
+            res.status(422).json({ msg: 'O user não tem acesso a esse projeto.' })
+            return
+        }
+
+        if (!name) {
+            return res.status(422).json({ msg: 'O nome deve ser obrigatório' })
+        } else {
+            updatedData.name = name
+        }
+        if (!content) {
+            return res.status(422).json({ msg: 'A abreviação deve ser obrigatória' })
+        } else {
+            updatedData.content = content
+        }
+        if (!describe) {
+            return res.status(422).json({ msg: 'A descrição deve ser obrigatória' })
+        } else {
+            updatedData.describe = describe
+        }
+
+        await Project.findByIdAndUpdate(id, updatedData)
+        res.status(200).json(
+            {
+                mgg: 'Projeto atualizado com sucesso.',
+                project
+            })
+
+    }
+
 }
