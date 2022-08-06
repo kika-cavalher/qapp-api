@@ -81,7 +81,32 @@ module.exports = class ProjectController {
 
     }
 
-    static async cre888ate(req, res) {}
+    static async removeProjectById(req, res) {
+        const id = req.params.id
+
+        if(!ObjectId.isValid(id)) {
+            return res.status(422).json({ msg: 'Id inválido' })
+        }
+
+        const project = await Project.findOne({'_id': id})
+        if(!project){
+            res.status(404).json({ msg: 'Projeto não encontrado.' })
+        }
+
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+
+        if(project.user._id.toString() !== user._id.toString()){
+            res.status(422).json({ msg: 'O user não tem acesso a esse projeto.' })
+        }
+
+        await Project.findByIdAndRemove(id)
+        res.status(200).json(
+            {
+                mgg: 'Projeto excluido com sucesso.'
+            })
+
+    }
 
     static async cre888ate(req, res) {}
 }

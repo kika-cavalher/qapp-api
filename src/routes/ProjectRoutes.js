@@ -8,7 +8,7 @@ router.get('/allProjects', ProjectController.allProjects)
 router.post('/create', verifyToken, ProjectController.create)
 router.get('/', verifyToken, ProjectController.getAllUserProjects)
 router.get('/:id', verifyToken, ProjectController.getPetById)
-// router.get('/', verifyToken, ProjectController.getAllUserProjects)
+router.delete('/:id', verifyToken, ProjectController.removeProjectById)
 
 
 
