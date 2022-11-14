@@ -9,7 +9,7 @@ const imageStorage = multer.diskStorage({
             folder = 'users'
         }
 
-        cb(null, `public/img/${folder}`)
+        cb(null, `public/images/${folder}`)
     },
     filename: function(req, file, cb){
         cb(null, Date.now() + path.extname(file.originalname))
