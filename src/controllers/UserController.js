@@ -106,7 +106,7 @@ module.exports = class UserController {
         const { name, email, password, confirmPassword } = req.body
 
         if(req.file){
-            user.image = req.file.filename
+            user.image = req.file.path
         }
 
         const userExist = await User.findOne({ email: email })
