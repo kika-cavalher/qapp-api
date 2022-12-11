@@ -22,7 +22,7 @@ const imageUpload = multer({
         if(!file.originalname.match(/\.(png|jpg)$/)){
             return cb(new Error("Só é aceito arquivos no formato jpg ou png"))
         }
-        cb(undefined, true)
+        cb(null, true)
     },
 })
 
