@@ -29,8 +29,7 @@ module.exports = class ProjectController {
             const newProject = await project.save()
             res.status(201).json(
                 {
-                    msg: 'Projet create',
-                    newProject
+                    msg: 'Projeto criado com sucesso'
                 })
 
         } catch (error) {
