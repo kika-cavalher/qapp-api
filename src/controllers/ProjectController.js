@@ -11,10 +11,6 @@ module.exports = class ProjectController {
         if (!name) {
             return res.status(422).json({ msg: 'O nome deve ser obrigatório' })
         }
-        if (!content) {
-            return res.status(422).json({ msg: 'A abreviação deve ser obrigatório' })
-        }
-
         const token = getToken(req)
         const user = await getUserByToken(token)
 
