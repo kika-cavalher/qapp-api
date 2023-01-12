@@ -129,9 +129,7 @@ module.exports = class ProjectController {
         } else {
             updatedData.name = name
         }
-        if (!content) {
-            return res.status(422).json({ msg: 'A abreviação deve ser obrigatória' })
-        } else {
+        if (content) {
             updatedData.content = content
         }
         if (!describe) {
