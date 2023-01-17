@@ -100,7 +100,7 @@ module.exports = class ProjectController {
         await Project.findByIdAndRemove(id)
         res.status(200).json(
             {
-                mgg: 'Projeto excluido com sucesso.'
+                msg: 'Projeto excluído com sucesso.'
             })
 
     }
